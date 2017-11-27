@@ -156,7 +156,7 @@ void mp_setup_av_network_options(AVDictionary **dict, struct mpv_global *global,
 
     // HTTP specific options (other protocols ignore them)
     if (opts->network_useragent)
-        av_dict_set(dict, "user-agent", opts->network_useragent, 0);
+        av_dict_set(dict, "user_agent", opts->network_useragent, 0);
     if (opts->network_cookies_enabled) {
         char *file = opts->network_cookies_file;
         if (file && file[0])
