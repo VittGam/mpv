@@ -118,8 +118,6 @@ static bool update_pipeline(struct vf_instance *vf, bool deint)
         filters++;
         num_filters--;
     }
-    if (filters == p->pipe.filters && num_filters == p->pipe.num_filters)
-        return true;
     p->pipe.forward.num_surfaces = p->pipe.backward.num_surfaces = 0;
     p->pipe.num_input_colors = p->pipe.num_output_colors = 0;
     p->pipe.num_filters = 0;
@@ -203,6 +201,7 @@ static struct mp_image *render(struct vf_instance *vf, struct mp_image *in,
     if (!check_error(vf, status, "vaMapBuffer()"))
         goto cleanup;
 
+    *param = (VAProcPipelineParameterBuffer){0};
     param->surface = in_id;
     param->surface_region = &(VARectangle){0, 0, in->w, in->h};
     param->output_region = &(VARectangle){0, 0, img->w, img->h};
@@ -212,7 +211,7 @@ static struct mp_image *render(struct vf_instance *vf, struct mp_image *in,
     param->num_filters = p->pipe.num_filters;
 
     for (int n = 0; n < p->needed_future_frames; n++) {
-        int idx = p->current_pos - 1 - n;
+        int idx = p->current_pos + 1 + n;
         if (idx >= 0 && idx < p->num_queue)
             add_surface(p, &p->pipe.forward, p->queue[idx]);
     }
@@ -220,7 +219,7 @@ static struct mp_image *render(struct vf_instance *vf, struct mp_image *in,
     param->num_forward_references = p->pipe.forward.num_surfaces;
 
     for (int n = 0; n < p->needed_past_frames; n++) {
-        int idx = p->current_pos + 1 + n;
+        int idx = p->current_pos - 1 - n;
         if (idx >= 0 && idx < p->num_queue)
             add_surface(p, &p->pipe.backward, p->queue[idx]);
     }
