@@ -1039,8 +1039,8 @@ void vo_wayland_uninit (struct vo *vo)
     struct vo_wayland_state *wl = vo->wayland;
     destroy_cursor(wl);
     destroy_window(wl);
-    destroy_display(wl);
     destroy_input(wl);
+    destroy_display(wl);
     talloc_free(wl);
     vo->wayland = NULL;
 }
