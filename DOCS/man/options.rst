@@ -2381,11 +2381,14 @@ Demuxer
     (This value tends to be fuzzy, because many file formats don't store linear
     timestamps.)
 
-``--force-seekable=<yes|no>``
+``--force-seekable=<yes|no|auto>``
     If the player thinks that the media is not seekable (e.g. playing from a
     pipe, or it's a http stream with a server that doesn't support range
     requests), seeking will be disabled. This option can forcibly enable it.
     For seeks within the cache, there's a good chance of success.
+    This option can also forcibly disable seeking in cases where player is
+    wrong (eg. streamed MPEG-TS).
+    Default is auto.
 
 Input
 -----

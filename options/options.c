@@ -254,7 +254,10 @@ const m_option_t mp_opts[] = {
     OPT_INTRANGE("demuxer-max-packets", demuxer_max_packs, 0, 0, INT_MAX),
     OPT_INTRANGE("demuxer-max-bytes", demuxer_max_bytes, 0, 0, INT_MAX),
 
-    OPT_FLAG("force-seekable", force_seekable, 0),
+    OPT_CHOICE("force-seekable", force_seekable, 0,
+               ({"auto", -1},
+                {"no", 0},
+                {"yes", 1})),
 
     OPT_DOUBLE("cache-secs", demuxer_min_secs_cache, M_OPT_MIN, .min = 0),
     OPT_FLAG("cache-pause", cache_pausing, 0),
@@ -767,6 +770,7 @@ const struct MPOpts mp_default_opts = {
     .network_timeout = 0.0,
     .hls_bitrate = INT_MAX,
     .demuxer_min_secs_cache = 10.0,
+    .force_seekable = -1,
     .cache_pausing = 1,
     .chapterrange = {-1, -1},
     .ab_loop = {MP_NOPTS_VALUE, MP_NOPTS_VALUE},

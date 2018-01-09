@@ -1110,10 +1110,14 @@ static struct demuxer *open_given_type(struct mpv_global *global,
             mp_verbose(log, "Detected file format: %s\n", desc->desc);
         if (!in->d_thread->seekable)
             mp_verbose(log, "Stream is not seekable.\n");
-        if (!in->d_thread->seekable && demuxer->opts->force_seekable) {
+        if (!in->d_thread->seekable && demuxer->opts->force_seekable == 1) {
             mp_warn(log, "Not seekable, but enabling seeking on user request.\n");
             in->d_thread->seekable = true;
             in->d_thread->partially_seekable = true;
+        } else if (in->d_thread->seekable && demuxer->opts->force_seekable == 0) {
+            mp_warn(log, "Seekable, but disabling seeking on user request.\n");
+            in->d_thread->seekable = false;
+            in->d_thread->partially_seekable = false;
         }
         demux_init_cuesheet(in->d_thread);
         demux_init_cache(demuxer);
