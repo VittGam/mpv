@@ -39,7 +39,7 @@ int mp_lavc_set_extradata(AVCodecContext *avctx, void *ptr, int size)
     if (size) {
         av_free(avctx->extradata);
         avctx->extradata_size = 0;
-        avctx->extradata = av_mallocz(size + FF_INPUT_BUFFER_PADDING_SIZE);
+        avctx->extradata = av_mallocz(size + AV_INPUT_BUFFER_PADDING_SIZE);
         if (!avctx->extradata)
             return -1;
         avctx->extradata_size = size;
