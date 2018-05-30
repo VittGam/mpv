@@ -159,8 +159,8 @@ static int reconfig(struct vo *vo, struct mp_image_params *params)
         goto error;
 
     vc->buffer_size = 6 * width * height + 200;
-    if (vc->buffer_size < FF_MIN_BUFFER_SIZE)
-        vc->buffer_size = FF_MIN_BUFFER_SIZE;
+    if (vc->buffer_size < AV_INPUT_BUFFER_MIN_SIZE)
+        vc->buffer_size = AV_INPUT_BUFFER_MIN_SIZE;
     if (vc->buffer_size < sizeof(AVPicture))
         vc->buffer_size = sizeof(AVPicture);
 
