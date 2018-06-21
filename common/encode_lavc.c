@@ -680,7 +680,7 @@ int encode_lavc_open_codec(struct encode_lavc_context *ctx, AVStream *stream)
         MP_INFO(ctx, "Opening video encoder: %s [%s]\n",
                 ctx->vc->long_name, ctx->vc->name);
 
-        if (ctx->vc->capabilities & CODEC_CAP_EXPERIMENTAL) {
+        if (ctx->vc->capabilities & AV_CODEC_CAP_EXPERIMENTAL) {
             stream->codec->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
             MP_WARN(ctx, "\n\n"
                        "           ********************************************\n"
@@ -715,7 +715,7 @@ int encode_lavc_open_codec(struct encode_lavc_context *ctx, AVStream *stream)
         MP_INFO(ctx, "Opening audio encoder: %s [%s]\n",
                 ctx->ac->long_name, ctx->ac->name);
 
-        if (ctx->ac->capabilities & CODEC_CAP_EXPERIMENTAL) {
+        if (ctx->ac->capabilities & AV_CODEC_CAP_EXPERIMENTAL) {
             stream->codec->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
             MP_WARN(ctx, "\n\n"
                        "           ********************************************\n"
